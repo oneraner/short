@@ -4,8 +4,12 @@ import { GetListResponse } from "../App";
 
 export const PlayerContainer = ({
   resource,
+  index,
+  setCurrentVideo,
 }: {
   resource: GetListResponse;
+  index: number;
+  setCurrentVideo: (currentVideo: number) => void;
 }) => {
   const { title, cover, play_url } = resource;
 
@@ -21,23 +25,15 @@ export const PlayerContainer = ({
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          console.log("entry000000", title, entry);
           if (entry.isIntersecting) {
-            console.log("entry1111111", title, entry);
             setPlaying(true);
-            if (containerRef.current) {
-              console.log("playerRef", playerRef);
-              containerRef.current.scrollIntoView({
-                block: "start",
-                inline: "nearest",
-              });
-            }
+            setCurrentVideo(index);
           } else {
             setPlaying(false);
           }
         });
       },
-      { threshold: 0.2 } // 设置一个适当的阈值，表示元素可见的比例
+      { threshold: 0.1 } // 设置一个适当的阈值，表示元素可见的比例
     );
 
     if (containerRef.current) {
@@ -53,34 +49,35 @@ export const PlayerContainer = ({
 
   return (
     <div
-      key={title}
       ref={containerRef}
-      className="w-screen h-screen relative bg-black flex items-center"
+      id={`video${index}`}
+      className="w-screen h-screen relative bg-black"
     >
-      <div className="relative w-screen pt-[177%]">
-        <ReactPlayer
-          ref={playerRef}
-          playing={playing}
-          loop
-          muted={muted}
-          width="100%"
-          height="100%"
-          className="absolute top-0 left-0"
-          onPlay={() => {
-            if (!playerRef?.current) return;
-            playerRef?.current?.seekTo(currentPlayTime, "seconds");
-          }}
-          onProgress={({ played, playedSeconds }) => {
-            setCurrentProcess(played);
-            setCurrentPlayTime(playedSeconds);
-          }}
-          url={play_url}
-          config={{ file: { forceHLS: true, forceSafariHLS: true } }}
-        />
+      <div className="h-screen relative flex justify-center items-center">
+        <div className="relative w-screen max-w-[550px] pt-[177%]">
+          <ReactPlayer
+            ref={playerRef}
+            playing={playing}
+            loop
+            muted={muted}
+            width="100%"
+            height="100%"
+            className="absolute top-0 left-0"
+            onPlay={() => {
+              if (!playerRef?.current) return;
+              playerRef?.current?.seekTo(currentPlayTime, "seconds");
+            }}
+            onProgress={({ played, playedSeconds }) => {
+              setCurrentProcess(played);
+              setCurrentPlayTime(playedSeconds);
+            }}
+            url={play_url}
+            config={{ file: { forceHLS: true, forceSafariHLS: true } }}
+          />
+        </div>
       </div>
       <div className="absolute bottom-0 left-0 z-10 bg-black px-4 py-2 rounded-md w-full">
         <div className="text-white">{title}</div>
-        <div>{}</div>
         <input
           type="range"
           value={currentProcess * 100}

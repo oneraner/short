@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import useSWR from "swr";
 import axios from "axios";
 import "./App.css";
-
-import { PlayerContainer } from "./components/PlayerContainer";
+import ShortsPlayer from "./components/ShortsPlayer";
 
 export interface GetListResponse {
   title: string;
@@ -12,20 +11,17 @@ export interface GetListResponse {
 }
 
 function App() {
-  const wrapRef = useRef(null);
-
+  const wrapRef = useRef<HTMLDivElement>(null);
   const { data } = useSWR("video", () =>
     axios.get("http://localhost:8088/for_you_list").then(res => res)
   );
 
   return (
-    <div
-      ref={wrapRef}
-      className="w-screen h-screen overflow-scroll scroll-smooth"
-    >
-      {(data?.data?.items ?? []).map((resource: GetListResponse) => (
-        <PlayerContainer resource={resource} />
-      ))}
+    <div ref={wrapRef} className="container">
+      <ShortsPlayer
+        shortsData={data?.data?.items ?? []}
+        screenHeight={wrapRef?.current?.clientHeight ?? 0}
+      />
     </div>
   );
 }
