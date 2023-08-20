@@ -11,7 +11,7 @@ export const PlayerContainer = ({
   index: number;
   setCurrentVideo: (currentVideo: number) => void;
 }) => {
-  const { title, cover, play_url } = resource;
+  const { title, play_url } = resource;
 
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
@@ -78,6 +78,9 @@ export const PlayerContainer = ({
       </div>
       <div className="absolute bottom-0 left-0 z-10 bg-black px-4 py-2 rounded-md w-full">
         <div className="text-white">{title}</div>
+        <button onClick={() => setMuted(pre => !pre)}>
+          {muted ? "開啟靜音" : "靜音"}
+        </button>
         <input
           type="range"
           value={currentProcess * 100}
