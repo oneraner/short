@@ -49,7 +49,10 @@ export const ShortsPlayer = ({
   });
 
   return (
-    <div className="wrap flex flex-col h-screen overflow-scroll" ref={testRef}>
+    <div
+      className="wrap flex flex-col h-[calc(100vh_-_96px)] overflow-scroll bg-black"
+      ref={testRef}
+    >
       <div className="play">
         {shortsData.map((resource: GetListResponse, index) => (
           <PlayerContainer

@@ -3,6 +3,8 @@ import useSWR from "swr";
 import axios from "axios";
 import "./App.css";
 import ShortsPlayer from "./components/ShortsPlayer";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export interface GetListResponse {
   title: string;
@@ -18,10 +20,12 @@ function App() {
 
   return (
     <div ref={wrapRef} className="container">
+      <Header />
       <ShortsPlayer
         shortsData={data?.data?.items ?? []}
         screenHeight={wrapRef?.current?.clientHeight ?? 0}
       />
+      <Footer />
     </div>
   );
 }

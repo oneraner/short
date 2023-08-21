@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import { GetListResponse } from "../App";
+import { BsVolumeMuteFill, BsVolumeDownFill } from "react-icons/bs";
 
 export const PlayerContainer = ({
   resource,
@@ -51,9 +52,9 @@ export const PlayerContainer = ({
     <div
       ref={containerRef}
       id={`video${index}`}
-      className="w-screen h-screen relative bg-black"
+      className="w-screen h-[calc(100vh_-_96px)] relative bg-black"
     >
-      <div className="h-screen relative flex justify-center items-center">
+      <div className="h-[calc(100vh_-_96px)] relative flex justify-center items-center">
         <div className="relative w-screen max-w-[550px] pt-[177%]">
           <ReactPlayer
             ref={playerRef}
@@ -77,10 +78,16 @@ export const PlayerContainer = ({
         </div>
       </div>
       <div className="absolute bottom-0 left-0 z-10 bg-black px-4 py-2 rounded-md w-full">
-        <div className="text-white">{title}</div>
-        <button onClick={() => setMuted(pre => !pre)}>
-          {muted ? "開啟靜音" : "靜音"}
-        </button>
+        <div className="text-white flex items-center">
+          <span className="mr-2">{title}</span>
+          <button onClick={() => setMuted(pre => !pre)}>
+            {muted ? (
+              <BsVolumeMuteFill className="text-white h-7 w-7" />
+            ) : (
+              <BsVolumeDownFill className="text-white h-7 w-7" />
+            )}
+          </button>
+        </div>
         <input
           type="range"
           value={currentProcess * 100}
