@@ -93,11 +93,10 @@ export const PlayerContainer = ({
           value={currentProcess * 100}
           onChange={e => {
             if (!playerRef?.current) return;
-            setCurrentProcess(Number(e.target.value));
-            playerRef?.current?.seekTo(
-              Number(e.target.value) / 100,
-              "fraction"
-            );
+            const currentSec = Number(e.target.value);
+            setCurrentProcess(currentSec);
+            setCurrentPlayTime(currentSec);
+            playerRef?.current?.seekTo(currentSec / 100, "fraction");
           }}
           min={0}
           max={100}
