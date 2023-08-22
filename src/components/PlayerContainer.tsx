@@ -17,7 +17,6 @@ export const PlayerContainer = ({
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
   const [currentProcess, setCurrentProcess] = useState(0);
-  const [currentPlayTime, setCurrentPlayTime] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<ReactPlayer | null>(null);
@@ -66,11 +65,11 @@ export const PlayerContainer = ({
             className="absolute top-0 left-0"
             onPlay={() => {
               if (!playerRef?.current) return;
-              playerRef?.current?.seekTo(currentPlayTime, "seconds");
+              playerRef?.current?.seekTo(currentProcess, "fraction");
             }}
-            onProgress={({ played, playedSeconds }) => {
+            onProgress={({ played }) => {
               setCurrentProcess(played);
-              setCurrentPlayTime(playedSeconds);
+              console.log("process", played);
             }}
             url={play_url}
             config={{ file: { forceHLS: true, forceSafariHLS: true } }}
@@ -93,10 +92,8 @@ export const PlayerContainer = ({
           value={currentProcess * 100}
           onChange={e => {
             if (!playerRef?.current) return;
-            const currentSec = Number(e.target.value);
-            setCurrentProcess(currentSec);
-            setCurrentPlayTime(currentSec);
-            playerRef?.current?.seekTo(currentSec / 100, "fraction");
+            const currentProcess = Number(e.target.value) / 100;
+            playerRef?.current?.seekTo(currentProcess, "fraction");
           }}
           min={0}
           max={100}
