@@ -93,6 +93,7 @@ export const PlayerContainer = ({
           value={currentProcess * 100}
           onChange={e => {
             if (!playerRef?.current) return;
+            setCurrentProcess(Number(e.target.value));
             playerRef?.current?.seekTo(
               Number(e.target.value) / 100,
               "fraction"
