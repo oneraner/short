@@ -52,9 +52,9 @@ export const PlayerContainer = ({
     <div
       ref={containerRef}
       id={`video${index}`}
-      className="w-screen h-[calc(100vh_-_96px)] relative bg-black"
+      className="w-screen h-[calc(100dvh_-_96px)] relative bg-black"
     >
-      <div className="h-[calc(100vh_-_96px)] relative flex justify-center items-center">
+      <div className="h-[calc(100dvh_-_96px)] relative flex justify-center items-center">
         <div className="relative w-screen max-w-[550px] pt-[177%]">
           <ReactPlayer
             ref={playerRef}

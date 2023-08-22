@@ -50,7 +50,7 @@ export const ShortsPlayer = ({
 
   return (
     <div
-      className="wrap flex flex-col h-[calc(100vh_-_96px)] overflow-scroll bg-black"
+      className="wrap flex flex-col h-[calc(100dvh_-_96px)] overflow-scroll bg-black"
       ref={testRef}
     >
       <div className="play">
