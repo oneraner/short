@@ -71,7 +71,6 @@ export const PlayerContainer = ({
             }}
             onProgress={({ played }) => {
               setCurrentProcess(played);
-              console.log("process", played);
             }}
             url={play_url}
             config={{
