@@ -18,21 +18,24 @@ function App() {
   const isMock = params.get("mock") === "true";
 
   const { data } = useSWR(isMock ? null : "video", () =>
-    axios.get("http://localhost:8088/for_you_list").then(res => res)
+    axios.get("http://localhost:8088/for_you_list").then((res) => res)
   );
 
   const shortsData = isMock
     ? [
         {
           title: "test0",
+          cover: "https://picsum.photos/200",
           play_url: "https://livedoc.cgtn.com/500d/prog_index.m3u8",
         },
         {
           title: "test1",
+          cover: "https://picsum.photos/200",
           play_url: "https://livedoc.cgtn.com/500d/prog_index.m3u8",
         },
         {
           title: "test2",
+          cover: "https://picsum.photos/200",
           play_url: "https://livedoc.cgtn.com/500d/prog_index.m3u8",
         },
       ]
