@@ -12,7 +12,7 @@ export const PlayerContainer = ({
   index: number;
   setCurrentVideo: (currentVideo: number) => void;
 }) => {
-  const { title, play_url } = resource;
+  const { title, cover, play_url } = resource;
 
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
@@ -21,10 +21,12 @@ export const PlayerContainer = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<ReactPlayer | null>(null);
 
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
+      (entries) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setCurrentVideo(index);
           }
@@ -91,17 +93,25 @@ export const PlayerContainer = ({
             }}
             onProgress={({ played }) => {
               setCurrentProcess(played);
-              console.log("process", played);
             }}
             url={play_url}
-            config={{ file: { forceHLS: true, forceSafariHLS: true } }}
+            config={{
+              file: {
+                forceHLS: !isSafari,
+                forceVideo: true,
+                attributes: {
+                  poster: cover && cover,
+                  disablePictureInPicture: true,
+                },
+              },
+            }}
           />
         </div>
       </div>
       <div className="absolute bottom-0 left-0 z-10 bg-black px-4 py-2 rounded-md w-full">
         <div className="text-white flex items-center">
           <span className="mr-2">{title}</span>
-          <button onClick={() => setMuted(pre => !pre)}>
+          <button onClick={() => setMuted((pre) => !pre)}>
             {muted ? (
               <BsVolumeMuteFill className="text-white h-7 w-7" />
             ) : (
@@ -112,7 +122,7 @@ export const PlayerContainer = ({
         <input
           type="range"
           value={currentProcess * 100}
-          onChange={e => {
+          onChange={(e) => {
             if (!playerRef?.current) return;
             const currentProcess = Number(e.target.value) / 100;
             playerRef?.current?.seekTo(currentProcess, "fraction");
