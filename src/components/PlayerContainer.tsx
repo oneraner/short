@@ -26,14 +26,36 @@ export const PlayerContainer = ({
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            setPlaying(true);
             setCurrentVideo(index);
+          }
+        });
+      },
+      { threshold: 0.1 } // 设置一个适当的阈值，表示元素可见的比例
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef?.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef?.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setPlaying(true);
           } else {
             setPlaying(false);
           }
         });
       },
-      { threshold: 0.1 } // 设置一个适当的阈值，表示元素可见的比例
+      { threshold: 0.55 } // 设置一个适当的阈值，表示元素可见的比例
     );
 
     if (containerRef.current) {

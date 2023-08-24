@@ -40,7 +40,7 @@ export const ShortsPlayer = ({
     onPress: updateDraggable,
     onDrag: updateProgress,
     onThrowUpdate: updateProgress,
-    minimumMovement: 50,
+    minimumMovement: 10,
     snap: {
       y: function (endValue) {
         return Math.round(endValue / screenHeight) * screenHeight;
