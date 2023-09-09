@@ -3,7 +3,7 @@ import PlayerContainer from "./PlayerContainer";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 gsap.registerPlugin(Draggable, ScrollToPlugin);
 
@@ -14,8 +14,8 @@ export const ShortsPlayer = ({
   shortsData: GetListResponse[];
   screenHeight: number;
 }) => {
-  const testRef = useRef(null);
   const [currentVideo, setCurrentVideo] = useState(0);
+  const [muted, setMuted] = useState(true);
 
   const scrollTo = () => {
     gsap.to(".wrap", {
@@ -49,17 +49,16 @@ export const ShortsPlayer = ({
   });
 
   return (
-    <div
-      className="wrap flex flex-col h-[calc(100dvh_-_96px)] overflow-scroll bg-black"
-      ref={testRef}
-    >
+    <div className="wrap flex flex-col h-[calc(100dvh_-_96px)] overflow-y-scroll bg-black">
       <div className="play">
         {shortsData.map((resource: GetListResponse, index) => (
           <PlayerContainer
             key={resource.title}
             resource={resource}
             index={index}
+            muted={muted}
             setCurrentVideo={setCurrentVideo}
+            setMuted={setMuted}
           />
         ))}
       </div>

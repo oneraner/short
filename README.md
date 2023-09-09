@@ -1,27 +1,13 @@
-# React + TypeScript + Vite
+# Short demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+練習實作短影片 ( m3u8格式 ) 滑動切換播放影片功能，由於 chrome 自動播放政策的關係預設靜音，IOS 由於缺乏設備測試擱置
 
-Currently, two official plugins are available:
+除了中間播放影片及滑動功能外，按鈕大多只是裝飾用。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# 使用技術
 
-## Expanding the ESLint configuration
+框架：React + TypeScript + Vite
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+CSS: TailwindCSS
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+滑動：GSAP

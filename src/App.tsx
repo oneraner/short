@@ -1,6 +1,4 @@
 import { useRef } from "react";
-import useSWR from "swr";
-import axios from "axios";
 import "./App.css";
 import ShortsPlayer from "./components/ShortsPlayer";
 import Header from "./components/Header";
@@ -14,38 +12,18 @@ export interface GetListResponse {
 
 function App() {
   const wrapRef = useRef<HTMLDivElement>(null);
-  const params = new URLSearchParams(window.location.search);
-  const isMock = params.get("mock") === "true";
 
-  const { data } = useSWR(isMock ? null : "video", () =>
-    axios.get("http://localhost:8088/for_you_list").then((res) => res)
-  );
-
-  const shortsData = isMock
-    ? [
-        {
-          title: "test0",
-          cover: "https://picsum.photos/200",
-          play_url: "https://livedoc.cgtn.com/500d/prog_index.m3u8",
-        },
-        {
-          title: "test1",
-          cover: "https://picsum.photos/200",
-          play_url: "https://livedoc.cgtn.com/500d/prog_index.m3u8",
-        },
-        {
-          title: "test2",
-          cover: "https://picsum.photos/200",
-          play_url: "https://livedoc.cgtn.com/500d/prog_index.m3u8",
-        },
-      ]
-    : data?.data?.items ?? [];
+  const testShortData = Array.from({ length: 10 }, (_, index) => ({
+    title: `Test video ${index}`,
+    cover: "https://picsum.photos/200",
+    play_url: "https://livedoc.cgtn.com/500d/prog_index.m3u8",
+  }));
 
   return (
     <div ref={wrapRef} className="container">
       <Header />
       <ShortsPlayer
-        shortsData={shortsData}
+        shortsData={testShortData}
         screenHeight={wrapRef?.current?.clientHeight ?? 0}
       />
       <Footer />
