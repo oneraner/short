@@ -16,7 +16,7 @@ function App() {
   const testShortData = Array.from({ length: 10 }, (_, index) => ({
     title: `Test video ${index}`,
     cover: "https://picsum.photos/200",
-    play_url: "https://livedoc.cgtn.com/500d/prog_index.m3u8",
+    play_url: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
   }));
 
   return (
